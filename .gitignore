@@ -1,0 +1,9 @@
+# RustBackend/**/target/
+# **/.idea
+
+# **/node_modules/
+# **/*.log
+# **/tmp
+# **/dist
+# **/out-tsc
+# **/bazel-out
