@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PersonDetailsComponent } from '../person-details/person-details.component';
 import { Person } from '../person';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { RestApiService } from '../rest-api.service';
@@ -7,7 +8,7 @@ import { RestApiService } from '../rest-api.service';
 @Component({
   selector: 'app-people',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet],
+  imports: [CommonModule, RouterLink, RouterOutlet, PersonDetailsComponent],
   templateUrl: './people.component.html',
   styleUrl: './people.component.css'
 })

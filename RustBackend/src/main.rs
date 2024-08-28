@@ -34,11 +34,6 @@ async fn main() {
         .allow_any_origin()
         .allow_methods(vec!["GET", "PUT"]);
 
-    let p = Person::new(String::from("hi there"), Colors::blue);
-
-
-
-
     let mut mdb = MariaDbConn::new(String::from("mariadb://root:my-secret-pw@127.0.0.1:3306/rust_api"));
     mdb.connect().await;
 
@@ -67,6 +62,11 @@ async fn main() {
         .and(pool_filter.clone())
         .and_then(handle_get_all_houses);
 
+    let get_house_by_id = warp::path!("housing" / "house"/ u64)
+        .and(warp::get())
+        .and(pool_filter.clone())
+        .and_then(handle_get_house_by_id);
+
     // stop deleting routes
     let people = warp::path("people")
         .and(warp::get())
@@ -84,6 +84,7 @@ async fn main() {
         .or(new_song)
         .or(new_house)
         .or(get_all_houses)
+        .or(get_house_by_id)
         .with(cors);
 
 
@@ -141,7 +142,7 @@ async fn add_song(pool: sqlx::MySqlPool, song: Song) ->  u64 {
             println!("{:#?}", s);
             s
         },
-        Err(e) => 0
+        Err(_e) => 0
     };
 
     res_id

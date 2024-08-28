@@ -1,4 +1,7 @@
 <section>
     <h2>This is a list of people</h2>
-    <app-person *ngFor="let person of peopleList" [Person]="person"></app-person>
+    <app-person-details 
+        *ngFor="let person of peopleList"
+        [person]="person">
+    </app-person-details>
 </section>

@@ -48,7 +48,7 @@ pub async fn post_housing_location(pool: sqlx::MySqlPool, hl: HousingLocation)
         println!("{:#?}", hl);
         match hl {
             Ok(o) => Ok(warp::reply::json(&o)),
-            Err(e) => Err(warp::reject::custom(GetError))
+            Err(_e) => Err(warp::reject::custom(GetError))
         }
     }
 
@@ -77,6 +77,14 @@ pub async fn handle_get_all_houses(pool: sqlx::MySqlPool) -> Result<impl warp::R
     let v = HousingLocation::get_all_housing_locations(pool).await;
     match v {
         Ok(v) => Ok(warp::reply::json(&v)),
-        Err(e) => Err(warp::reject::custom(GetError))
+        Err(_e) => Err(warp::reject::custom(GetError))
+    }
+}
+
+pub async fn handle_get_house_by_id(id: u64, pool: sqlx::MySqlPool) -> Result<impl warp::Reply, warp::Rejection> {
+    let h_res = HousingLocation::get_housing_location_by_id(pool, id).await;
+    match h_res {
+        Ok(h) => Ok(warp::reply::json(&h)),
+        Err(_e) => Err(warp::reject::custom(GetError))
     }
 }
